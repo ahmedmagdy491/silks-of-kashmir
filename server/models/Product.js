@@ -14,6 +14,7 @@ const productSchema = new mongoose.Schema(
 			unique: true,
 			lowercase: true,
 			index: true,
+			required: true,
 		},
 		description: {
 			type: String,
@@ -28,27 +29,33 @@ const productSchema = new mongoose.Schema(
 			text: true,
 		},
 		category: {
-			type: mongoose.Schema.Types.ObjectId,
+			type: mongoose.Schema.Types.String,
 			ref: 'Category',
+			required: true,
 		},
 
-		quantity: Number,
+		quantity: { type: Number, required: true },
 		sold: {
 			type: Number,
 			default: 0,
 		},
-		images: {
-			type: Array,
-		},
+
 		shipping: {
 			type: String,
 			enum: ['Yes', 'No'],
+			required: true,
 		},
 		color: {
 			type: String,
+			required: true,
 		},
 		brand: {
 			type: String,
+			required: true,
+		},
+		image: {
+			type: String,
+			required: true,
 		},
 		//  ratings: [
 		//  	{

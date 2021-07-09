@@ -11,7 +11,7 @@ const createCategory = Async(async (req, res) => {
 
 const getCategories = Async(async (req, res) => {
 	let categories = await Category.find().sort({ createdAt: -1 }).exec();
-	res.json(categories.length > 0 ? categories : 'No categories found');
+	res.json(categories);
 });
 
 const updateCategory = Async(async (req, res) => {

@@ -9,19 +9,27 @@ const createProduct = Async(async (req, res) => {
 
 const getProducts = Async(async (req, res) => {
 	let products = await Product.find()
-		.populate('category')
 		.sort([['cratedAt', 'desc']])
 		.exec();
 	res.json(products);
 });
 
 const getCatProduct = Async(async (req, res) => {
-	let { category } = req.body;
-	let products = await Product.find({ category })
-		// .populate('category')
-		.sort([['cratedAt', 'desc']])
-		.exec();
-	res.json(products.length > 0 ? products : 'No products');
-});
+	let { slug } = req.params;
 
-module.exports = { createProduct, getProducts, getCatProduct };
+	res.json(
+		await Product.find({ category: slug })
+			.sort([['cratedAt', 'desc']])
+			.exec()
+	);
+});
+const getProductDetails = Async(async (req, res) => {
+	const { slug } = req.params;
+	res.json(await Product.findOne({ slug }));
+});
+module.exports = {
+	createProduct,
+	getProducts,
+	getCatProduct,
+	getProductDetails,
+};

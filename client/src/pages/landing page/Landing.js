@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useEffect, Fragment } from 'react';
 import Panner from '../../components/Panner/Panner';
-import Categories from '../../components/Categories/Categories';
-
+import Categories from '../../pages/Categories/Categories';
+import { listCats } from '../../actions/catActions';
+import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../../components/Loader/Loader';
 const Landing = () => {
+	const dispatch = useDispatch();
+	const { catList } = useSelector((state) => ({ ...state }));
+	const { loading, error, cats } = catList;
+
+	useEffect(() => {
+		dispatch(listCats());
+	}, [dispatch]);
+	console.log(cats);
 	return (
-		<div>
-			<Panner />
-			<Categories />
-		</div>
+		<Fragment>
+			{loading ? (
+				<Loader />
+			) : (
+				<div>
+					<Panner cats={cats} />
+					<Categories cats={cats} />
+				</div>
+			)}
+		</Fragment>
 	);
 };
 
